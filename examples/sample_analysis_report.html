@@ -1,0 +1,2423 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IT Ticket Analysis - With Billing Category</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1800px; margin: 0 auto; background-color: white; padding: 20px; border-radius: 8px; }
+        h1 { color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; border-left: 4px solid #3498db; padding-left: 15px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10px; }
+        th, td { border: 1px solid #bdc3c7; padding: 4px; text-align: left; }
+        th { background-color: #3498db; color: white; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .clickable { color: #3498db; cursor: pointer; text-decoration: underline; font-weight: bold; }
+        .clickable:hover { background-color: #e8f4fd; }
+        .monitoring { background-color: #e8f5e8; }
+        .security { background-color: #f0e6ff; }
+        .email { background-color: #e6f3ff; }
+        .software { background-color: #fff0e6; }
+        .user-mgmt { background-color: #f0fff0; }
+        .infrastructure { background-color: #ffe6e6; }
+        .hardware { background-color: #fff3e0; }
+        .maintenance { background-color: #f5f5f5; }
+        .mobile { background-color: #e8f4f8; }
+        .specialized { background-color: #ffeef8; }
+        .general { background-color: #f8f8f8; }
+        .admin { background-color: #f0f8ff; }
+        .billing { background-color: #fff9e6; }
+        .detail-panel { display: none; background-color: #f8f9fa; padding: 10px; margin: 2px 0; border-radius: 5px; border: 1px solid #bdc3c7; }
+        .ticket-item { background-color: white; margin: 2px 0; padding: 6px; border-radius: 3px; border-left: 3px solid #3498db; font-size: 9px; }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 2px 6px; border-radius: 3px; cursor: pointer; }
+        .metric { background-color: #e8f4fd; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .automation-tag { background-color: #27ae60; color: white; padding: 1px 4px; border-radius: 3px; font-size: 8px; }
+        .new-category { background-color: #fff3cd; padding: 10px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #ffc107; }
+    </style>
+    <script>
+        function toggleDetails(ticketType) {
+            var panel = document.getElementById('details-' + ticketType.replace(/[^a-zA-Z0-9]/g, ''));
+            if (panel.style.display === 'none' || panel.style.display === '') {
+                panel.style.display = 'block';
+            } else {
+                panel.style.display = 'none';
+            }
+        }
+        
+        function closeDetails(ticketType) {
+            var panel = document.getElementById('details-' + ticketType.replace(/[^a-zA-Z0-9]/g, ''));
+            panel.style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 IT Ticket Analysis - With Billing Category</h1>
+        
+        <div class="new-category">
+            <strong>🆕 New Category Added:</strong> Billing and Financial Management - 264 tickets found
+        </div>
+        
+        <div class="metric">
+            <strong>Total Tickets:</strong> 4,377 | 
+            <strong>Unique Types:</strong> 172 | 
+            <strong>Total Time:</strong> 7024.4 hours |
+            <strong>🎯 Specific Patterns:</strong> 47 types
+        </div>
+        
+        <h2>📊 Category Summary with Billing</h2>
+        <table style="width: 60%;">
+            <tr><th>Category</th><th>Count</th><th>%</th><th>Notes</th></tr><tr><td>General IT Support</td><td>1,969</td><td>45.0%</td><td></td></tr><tr><td>User Management</td><td>356</td><td>8.1%</td><td></td></tr><tr><td>Security & Access</td><td>341</td><td>7.8%</td><td></td></tr><tr><td>Specialized Applications</td><td>300</td><td>6.9%</td><td></td></tr><tr><td>Financial & Billing</td><td>264</td><td>6.0%</td><td>🆕 New billing category</td></tr><tr><td>Software & Licensing</td><td>252</td><td>5.8%</td><td></td></tr><tr><td>Email & Communication</td><td>224</td><td>5.1%</td><td></td></tr><tr><td>Hardware & Equipment</td><td>200</td><td>4.6%</td><td></td></tr><tr><td>Monitoring & Alerts</td><td>189</td><td>4.3%</td><td></td></tr><tr><td>Infrastructure & Network</td><td>186</td><td>4.2%</td><td></td></tr><tr><td>Administrative Tasks</td><td>57</td><td>1.3%</td><td></td></tr><tr><td>System Maintenance</td><td>27</td><td>0.6%</td><td></td></tr><tr><td>Mobile & Remote</td><td>12</td><td>0.3%</td><td></td></tr>
+        </table>
+        
+        <h2>📊 All Ticket Types - Click for Deep Dive Details</h2>
+        <table>
+            <tr><th>Rank</th><th>Ticket Type</th><th>Category</th><th>Count</th><th>%</th><th>Total Hrs</th><th>Avg Hrs</th><th>Auto</th></tr>
+            <tr class="general">
+                <td>1</td>
+                <td class="clickable" onclick="toggleDetails('Email/Outlook Issues')">Email/Outlook Issues</td>
+                <td>General IT Support</td>
+                <td>1,123</td>
+                <td>25.7%</td>
+                <td>775.5</td>
+                <td>0.7</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-EmailOutlookIssues" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Email/Outlook Issues')">✕</button>
+                            <h4>Email/Outlook Issues - 1,123 tickets (25.7%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27364</strong> | 
+                            <strong>25.0hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Email Encryption<br>
+                            <strong>Description:</strong> Good morning, I have gotten some questions asking if Outlook has a feature that would “warn” someone about encrypting the email before sending. Someth...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-24400</strong> | 
+                            <strong>13.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> DMARC missing records<br>
+                            <strong>Description:</strong> Our most recent Bitsight report has multiple findings for domains we own that are missing DMARC records. We need to: Add the missing records with a po...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26601</strong> | 
+                            <strong>7.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Missing Microsoft Apps<br>
+                            <strong>Description:</strong> All of my Microsoft apps have been removed from my laptop. When I click the area where my Outlook app was previously located, I receive the following ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-27391</strong> | 
+                            <strong>6.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Help with Harmony/Perimeter 81 VPN<br>
+                            <strong>Description:</strong> Hi Support. I have lost access to Harmony/Perimeter 81 VPN, and have been working with them for several hours to try and get reinstalled and working. ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26042</strong> | 
+                            <strong>6.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Laptop Ram Utilization<br>
+                            <strong>Description:</strong> Morning, Are you able to look up my service tag and confirm if my laptop is supposed to have more than 16GB of RAM? After posting between having 1 exc...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27441</strong> | 
+                            <strong>6.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> jeff.hodgson@ever.ag<br>
+                            <strong>Description:</strong> Support I am having an issue with my email several of my emails at being sent to RSS feed and quarantined. I am missing emails from clients outside ou...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-24947</strong> | 
+                            <strong>6.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Computer Issues<br>
+                            <strong>Description:</strong> Good Morning, My computer has been progressively getting worse making weird sounds, noises, people talking sounding like a robot or making a loud pier...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27729</strong> | 
+                            <strong>6.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Computer Hardware<br>
+                            <strong>Description:</strong> Hello, Attached is our current list of accounted computer hardware. Could you please review it and let me know which equipment is no longer in use? I’...
+                        </div></div></td></tr>
+            <tr class="general">
+                <td>2</td>
+                <td class="clickable" onclick="toggleDetails('Other - nan')">Other - nan</td>
+                <td>General IT Support</td>
+                <td>279</td>
+                <td>6.4%</td>
+                <td>871.4</td>
+                <td>3.1</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-Othernan" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Other - nan')">✕</button>
+                            <h4>Other - nan - 279 tickets (6.4%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-24393</strong> | 
+                            <strong>351.5hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Daily Admin Work 2025<br>
+                            <strong>Description:</strong>  Daily Admin Work 2025
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-27211</strong> | 
+                            <strong>197.2hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Non Billable - Weekly IT Stand-Ups 2025.1<br>
+                            <strong>Description:</strong>  Non Billable - Weekly IT Stand-Ups 2025.1
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27796</strong> | 
+                            <strong>142.6hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Weekly Admin - Tickets & Emails & General admin work<br>
+                            <strong>Description:</strong> Time spent on Genuity, Tickets, emails, and phone calls/voicemails. Managing Genuity queue, reports, tickets. Weekly Admin - Tickets & Emails & Genera...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-25211</strong> | 
+                            <strong>4.3hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> DNS records change for dairy.com and ever.ag<br>
+                            <strong>Description:</strong> RE:Genuity | Help Desk DNS records change for dairy.com and ever.ag
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26843</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Paul Olofson 6/16<br>
+                            <strong>Description:</strong>  Offboarding: Paul Olofson 6/16
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-25241</strong> | 
+                            <strong>3.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> STANDARD FIREWALL UPGRADE - Ames<br>
+                            <strong>Description:</strong> Standard Firewall Patch Managementv7.0.14 build0601 (Mature) -> 7.2.10 build1706 (Mature)Upgrade chosen as it is the current recommended release STAND...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25061</strong> | 
+                            <strong>2.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> V0.dev<br>
+                            <strong>Description:</strong>  V0.dev
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26201</strong> | 
+                            <strong>2.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Cody Good 5/23<br>
+                            <strong>Description:</strong>  Offboarding: Cody Good 5/23
+                        </div></div></td></tr>
+            <tr class="billing">
+                <td>3</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Billing and Financial Management')">🎯 Billing and Financial Management</td>
+                <td>Financial & Billing</td>
+                <td>264</td>
+                <td>6.0%</td>
+                <td>257.6</td>
+                <td>1.0</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-BillingandFinancialManagement" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Billing and Financial Management')">✕</button>
+                            <h4>🎯 Billing and Financial Management - 264 tickets (6.0%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25246</strong> | 
+                            <strong>12.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Migrate alertops billing to corp IT<br>
+                            <strong>Description:</strong> Hello team, I would like to kick off the discussion of migrating the expense of our alert ops saas subscription to corp it. currently about half is fo...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-27203</strong> | 
+                            <strong>11.5hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Procurement / License Tracking<br>
+                            <strong>Description:</strong> Need to create a better solution for tracking software licenses for billing purposes Procurement / License Tracking
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-25368</strong> | 
+                            <strong>9.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Action required: Pay your past due invoice to avoid Microsoft Online service interruption<br>
+                            <strong>Description:</strong> IT – I need your help with this email. It came to a former employee. I am not aware of any former marketing employees who would have been paying for o...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24440</strong> | 
+                            <strong>6.4hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Transfer from my AMEX to Virtual Card Request<br>
+                            <strong>Description:</strong> FYI. Can you provide me with an email address and individual name of who would need to be added as an admin to the portal to begin making payment for ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26916</strong> | 
+                            <strong>5.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Princes Dela Cruz 7/7<br>
+                            <strong>Description:</strong> Additional details pendingStart date: 7/7/2025Hiring Manager: Dallas ChapmanContracting company: MicrosourcingContractor Full Name: Princes Dela CruzJ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26975</strong> | 
+                            <strong>5.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Alexis Asuro 8/25<br>
+                            <strong>Description:</strong> Start date: 8/22/2025Hiring Manager: Dallas ChapmanContracting company: MicrosourcingContractor Full Name: Alexis AsuroJob Title: Milk Accounting & Su...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26674</strong> | 
+                            <strong>5.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Access to Jeans Scribe Account<br>
+                            <strong>Description:</strong> Hi Support, Jean Llanas was creating some documentation for us using Scribe, but she is no longer with the company. We'd like to gain access to her Sc...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-24367</strong> | 
+                            <strong>4.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> More spreadsheet link problems<br>
+                            <strong>Description:</strong> I need these two ASAP: In EMI Work Files/Client Files – Active/NPB Files & Docs/Budget/2024 Budget – 2 files – 20241007 2024 Budget Forecast with Mont...
+                        </div></div></td></tr>
+            <tr class="monitoring">
+                <td>4</td>
+                <td class="clickable" onclick="toggleDetails('🎯 EverAgCorp247SitePoller Alerts')">🎯 EverAgCorp247SitePoller Alerts</td>
+                <td>Monitoring & Alerts</td>
+                <td>189</td>
+                <td>4.3%</td>
+                <td>71.1</td>
+                <td>0.4</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-EverAgCorp247SitePollerAlerts" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 EverAgCorp247SitePoller Alerts')">✕</button>
+                            <h4>🎯 EverAgCorp247SitePoller Alerts - 189 tickets (4.3%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-26709</strong> | 
+                            <strong>12.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ever.Ag - Lewisville Firewall is Down from EverAgCorp247SitePoller<br>
+                            <strong>Description:</strong> Site24x7 Alert Mailer Lewisville Firewall - Monitor is Down Down since Jun 7, 2025, 1:27:34 PM CDT Site monitored https://rsavpn.dairy.com:8080 Resolv...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-28912</strong> | 
+                            <strong>4.4hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ever.Ag - Platteville Primary is Down from EverAgCorp247SitePoller<br>
+                            <strong>Description:</strong> Site24x7 Alert Mailer Platteville Primary - Monitor is Down Down since Oct 10, 2025, 2:15:36 AM CDT Site monitored https://platteville-fw-primary-isp....
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-24660</strong> | 
+                            <strong>4.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ever.Ag - Brentwood Firewall is Down from EverAgCorp247SitePoller<br>
+                            <strong>Description:</strong> Site24x7 Alert Mailer Brentwood Firewall - Monitor is Down Down since Jan 22, 2025, 12:50:22 PM CST Site monitored https://brentwood-fw.ever.ag/ Resol...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-28411</strong> | 
+                            <strong>3.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Everagcorp247sitepoller showing down in site24x7<br>
+                            <strong>Description:</strong> Everagcorp247sitepoller is showing down in site24x7 I need to assign firewall to this ut b/c its "down" I cant Everagcorp247sitepoller showing down in...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26465</strong> | 
+                            <strong>3.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ever.Ag - chicago-dowtown-fw-primary-isp is Down from multiple locations<br>
+                            <strong>Description:</strong> Site24x7 Alert Mailer chicago-dowtown-fw-primary-isp - Monitor is Down Down since May 26, 2025, 11:54:14 AM CDT Site monitored https://chicago-dowtown...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-24576</strong> | 
+                            <strong>1.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ever.Ag - Platteville Primary is Down from EverAgCorp247SitePoller<br>
+                            <strong>Description:</strong> Site24x7 Alert Mailer Platteville Primary - Monitor is Down Down since Jan 16, 2025, 6:03:23 AM CST Site monitored https://platteville-fw-primary-isp....
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25432</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> EverAgCorp247SitePoller trouble<br>
+                            <strong>Description:</strong> Site puller in trouble https://www.site24x7.com/app/client?zaaid=NjkzOTUxODQy#/admin/onpremise-poller/333179000028512003/SUMMARY EverAgCorp247SitePoll...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-25023</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ever.Ag - Lewisville Firewall is Down from EverAgCorp247SitePoller<br>
+                            <strong>Description:</strong> Site24x7 Alert Mailer Lewisville Firewall - Monitor is Down Down since Feb 19, 2025, 5:14:43 AM CST Site monitored https://rsavpn.dairy.com:8080 Resol...
+                        </div></div></td></tr>
+            <tr class="security">
+                <td>5</td>
+                <td class="clickable" onclick="toggleDetails('🎯 1Password Setup and Management')">🎯 1Password Setup and Management</td>
+                <td>Security & Access</td>
+                <td>147</td>
+                <td>3.4%</td>
+                <td>142.8</td>
+                <td>1.0</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-1PasswordSetupandManagement" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 1Password Setup and Management')">✕</button>
+                            <h4>🎯 1Password Setup and Management - 147 tickets (3.4%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-24463</strong> | 
+                            <strong>20.4hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Moving all Ever.ag handled Software MFA’s  and Recovery Code to 1password<br>
+                            <strong>Description:</strong> Subtask-List up all software that handled by ever.ag in 1password Vault in spreadsheet and determine that can be moved MFA- Proceed with Moving MFA an...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-28519</strong> | 
+                            <strong>8.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> 1Password (Change Permission)<br>
+                            <strong>Description:</strong> 1Password (Change Permission) Remove 'Export Items' and 'Print Items'. Remove 'Manage Vault' in each Vaults. 1Password (Change Permission)
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-25605</strong> | 
+                            <strong>8.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Reminder: Upgrade to the latest version of Microsoft Entra Connect Sync by 30 April 2025 to avoid wizard impacts<br>
+                            <strong>Description:</strong> Thank you, Matthew Denecke | Sr. Manager, Infrastructure Ever.Ag Empowering Supply Chains to Feed a Growing World The Realm | 4400 State Hwy 121 | Sui...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-27592</strong> | 
+                            <strong>4.3hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> 1Password Account Deleted<br>
+                            <strong>Description:</strong> Morning, I can’t log in to my 1password account, when attempting to reset my password I received a message stating my account has been deleted. Accoun...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27331</strong> | 
+                            <strong>3.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Add SSO login for new Lewisville RT also add to site24/7 monitoring<br>
+                            <strong>Description:</strong> ip is https://71.78.87.202 creds are in 1password Add SSO login for new Lewisville RT also add to site24/7 monitoring
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-25325</strong> | 
+                            <strong>3.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Madcap account renewal and overview<br>
+                            <strong>Description:</strong> From: Jessica Itsede <Jessica.Itsede@ever.ag> Sent: Tuesday, March 11, 2025 11:12 PM To: Kenrick Daza <kenrick.daza@ever.ag>; Carl Kinghorn <Carl.King...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-24965</strong> | 
+                            <strong>3.3hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Roberto Maggi 2/24<br>
+                            <strong>Description:</strong> Additional access: open path for lewisvilleSharepoint groups to add to: All USLicenses: Confluence, jira, onepassword Onboarding: Roberto Maggi 2/24
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-24357</strong> | 
+                            <strong>3.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> 1Password and MS Account issue in Leneth Menoria's Microsourcing PC<br>
+                            <strong>Description:</strong> User reached out via Skype because she can't open her email in Outlook Desktop app in Microsourcing PC 1Password and MS Account issue in Leneth Menori...
+                        </div></div></td></tr>
+            <tr class="software">
+                <td>6</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Office 365 Setup')">🎯 Office 365 Setup</td>
+                <td>Software & Licensing</td>
+                <td>111</td>
+                <td>2.5%</td>
+                <td>80.2</td>
+                <td>0.7</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-Office365Setup" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Office 365 Setup')">✕</button>
+                            <h4>🎯 Office 365 Setup - 111 tickets (2.5%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-28348</strong> | 
+                            <strong>7.4hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Internet connectivity **high priority**<br>
+                            <strong>Description:</strong> Good morning! In the last 10 minutes, our internet connectivity has gone down every 1-2 minutes and is down for 15-20 seconds. Typically, this would n...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26834</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Emmaline Long 6/16<br>
+                            <strong>Description:</strong> Contractor that needs an ever.ag email and access to Office365 suite Onboarding: Emmaline Long 6/16
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-25480</strong> | 
+                            <strong>3.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Keyboard Keypad Keys Issues.<br>
+                            <strong>Description:</strong> I use Company provided Dell Laptop. I have noticed following Keys on my notebook are no longer working. Since I live not far from the Lewisville offic...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24399</strong> | 
+                            <strong>2.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Status of Network connection for Silo2<br>
+                            <strong>Description:</strong> Hello, Brandon/Alex! Have we been able to connect with vendor to install the network cable connection for this office? Marcie Smith | Executive Assist...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-25685</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Access to Kayleigh's Mentor Program Microsoft Forms<br>
+                            <strong>Description:</strong> Good morning, Team, Is there a way for you to give myself and Kimia access to the forms that were submitted that was created by Kayleigh Prygoda for M...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26359</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> URGENT: Microsoft Power Automate - Issue with Flows/Integrations<br>
+                            <strong>Description:</strong> IT Support – Erika Young existed the organization and the workflows she had setup did not transfer as intended resulting in broken processes. Can some...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26669</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> WFH equipment-monitors<br>
+                            <strong>Description:</strong> Hello, For my second screen at home, I am currently using a big LG monitor that I bought in 2018. The connection is quite spotty with this setup, so I...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-25921</strong> | 
+                            <strong>1.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Microsoft Purview **high priority**<br>
+                            <strong>Description:</strong> Good morning! With the changeover of Microsoft Purview to the new portal, I am no longer able to access the email review as I was previously. I had up...
+                        </div></div></td></tr>
+            <tr class="specialized">
+                <td>7</td>
+                <td class="clickable" onclick="toggleDetails('🎯 SharePoint Access')">🎯 SharePoint Access</td>
+                <td>Specialized Applications</td>
+                <td>107</td>
+                <td>2.4%</td>
+                <td>66.3</td>
+                <td>0.6</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-SharePointAccess" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 SharePoint Access')">✕</button>
+                            <h4>🎯 SharePoint Access - 107 tickets (2.4%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27095</strong> | 
+                            <strong>16.7hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Can’t Access RDP and S Drive After Workspace Migration<br>
+                            <strong>Description:</strong> Hi Team,We recently migrated to the updated version of Amazon Workspaces to fix the RDP access issue. Ivan Pena, our teammate, was able to log in and ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26337</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Mayank Dama 5/16<br>
+                            <strong>Description:</strong> This contractor will serve as a temporary backfill for Minal Patel. Can you please temporarily suspend Minal's access for the duration of her leave (w...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27190</strong> | 
+                            <strong>3.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> AWS Workspace Access<br>
+                            <strong>Description:</strong> Good morning, Could you please provide ankush.chaudhari@lumenalta.com access to AWS Workspace. Thank you, Andrew Wilson Clevertech Partners LLC, DBA L...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-27053</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: RDP Access Problem<br>
+                            <strong>Description:</strong> From: Ivan Pena <ivan.pena@ever.ag> Sent: Saturday, June 28, 2025 12:09 AM To: Kenrick Daza <kenrick.daza@ever.ag> Cc: Cindy Kelly <Cindy.Kelly@ever.a...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27782</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Jay Pankhania  AWS Workspace and EFC System SSO Access<br>
+                            <strong>Description:</strong> Jay Pankhania AWS Workspace and EFC System SSO Access Jay Pankhania  AWS Workspace and EFC System SSO Access
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-28921</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Bruce Martin  10/7<br>
+                            <strong>Description:</strong> need the aws workspace, or whereever i can drop files to him and get him access to training videos, etc. Other than that, basic email, etc. Onboarding...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25677</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> DDC AWS Access<br>
+                            <strong>Description:</strong> Hi all, It looks like I’ve recently lost access to many of the resources on the DDC AWS account. While I don’t need access to anything in Supply Chain...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27218</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> S DRIVE ACCESS??<br>
+                            <strong>Description:</strong> Who can I contact to get access or figure out how to map to the S drive? Tami Oestmann ERP - Senior Project Specialist Ever.Ag Agribusiness C: 712-592...
+                        </div></div></td></tr>
+            <tr class="infrastructure">
+                <td>8</td>
+                <td class="clickable" onclick="toggleDetails('🎯 VPN Setup/Configuration')">🎯 VPN Setup/Configuration</td>
+                <td>Infrastructure & Network</td>
+                <td>95</td>
+                <td>2.2%</td>
+                <td>71.2</td>
+                <td>0.8</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-VPNSetupConfiguration" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 VPN Setup/Configuration')">✕</button>
+                            <h4>🎯 VPN Setup/Configuration - 95 tickets (2.2%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25990</strong> | 
+                            <strong>3.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Abbyy Remote Server Access - Kellyconnect<br>
+                            <strong>Description:</strong> Hi! We are using a third party contracting service for a roadmap item pertaining to OCR. We need to grant the contractor, which is also affiliated wit...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-27122</strong> | 
+                            <strong>3.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Vault API team needs access to AWS & VPN resources for MDD development<br>
+                            <strong>Description:</strong> Hello,Could we please have Evan Higgins (edh@ever.ag), Andrew Kaiser (atk@ever.ag), Regan Hale (regan.hale@ever.ag), and Justin Zint (jaz@ever.ag) set...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-24532</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Allow access on AWS dev server to external company<br>
+                            <strong>Description:</strong> Hi team,we singed a contract for additional support for a library we use in our application.they are Progress. They give us support on the development...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-27668</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> VPN Forticlient issue<br>
+                            <strong>Description:</strong> Getting the error 'Login failed. Insufficient credential(s). Please check the password, client certificate, etc.' when trying to connect to VPN VPN Fo...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-28141</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> connection issues<br>
+                            <strong>Description:</strong> I am unable to connect to any of the network drives. I am connected by VPN but cannot access these areas ------------------- The information contained...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26138</strong> | 
+                            <strong>2.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Computer Issues<br>
+                            <strong>Description:</strong> Hello, Could we setup a time next week to look at my computer? Couple of issues: The VPN drops all the time I cannot longer stay connected to a mapped...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26509</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> VPN Issues<br>
+                            <strong>Description:</strong> Hello, I am having 2 different VPN issues. My EverAg VPN has been dropping more often lately, which causes me to have to start over whatever I am work...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27262</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> VPN Issues<br>
+                            <strong>Description:</strong> I am logged into the VPN and am trying to access: https://app.uat.dairyqa.com/ffusapayroll/ and keep getting a 502 Bad Gateway error. This error usual...
+                        </div></div></td></tr>
+            <tr class="user-mgmt">
+                <td>9</td>
+                <td class="clickable" onclick="toggleDetails('🎯 New User Setup')">🎯 New User Setup</td>
+                <td>User Management</td>
+                <td>90</td>
+                <td>2.1%</td>
+                <td>117.7</td>
+                <td>1.3</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-NewUserSetup" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 New User Setup')">✕</button>
+                            <h4>🎯 New User Setup - 90 tickets (2.1%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-24364</strong> | 
+                            <strong>22.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Hilmar VPN Issues<br>
+                            <strong>Description:</strong> Hi, Running into a new issue when I connect to the Hilmar VPN, where I lose internet connection on my local machine (Teams/Outlook/Web browser all sho...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26619</strong> | 
+                            <strong>10.5hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> New Hire Setup | Password Archive | Onboarding Database<br>
+                            <strong>Description:</strong> ObjectivesGenerate Secure Random PasswordsAutomate the creation of strong, unique passwords for new employees to ensure account security during onboar...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27800</strong> | 
+                            <strong>7.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ryloth Disk is almost full<br>
+                            <strong>Description:</strong> AdminDroid database files reaches 473GB worth of data that we need to cleanup, unfortunately we can't manually delete databse files raw data from file...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24956</strong> | 
+                            <strong>7.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Domain pointing<br>
+                            <strong>Description:</strong> Hey! We just saw that dairy.com is pointing to our archived old site. Can you please update it to ever.ag? Along with news.ever.ag? Erika Young | Sr. ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26922</strong> | 
+                            <strong>5.7hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Email Addresses<br>
+                            <strong>Description:</strong> Hello, We’ll need to setup the below email addresses for the new sub-domains. email@hello.ever.ag no-reply@hello.ever.ag updates@services.ever.ag no-r...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-25868</strong> | 
+                            <strong>3.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> New Hardware Requests<br>
+                            <strong>Description:</strong> Good afternoon, I’d like to request a new laptop if possible. I’ve had my current laptop for several years now and it has been having some issues for ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-24726</strong> | 
+                            <strong>3.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Validate Computers and Email Setup for New LMS Employees<br>
+                            <strong>Description:</strong> Hi, I wanted to validate the status of IT-related items critical to onboarding the new LMS employees who will join 3/1: Bill Hazer Kent Hickey Katina ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27205</strong> | 
+                            <strong>3.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> New Laptop For Brenda Ramirez (Laptop Replacement)<br>
+                            <strong>Description:</strong> Hey IT, Brenda Ramirez just let me know that she's dealing with constant issues with her laptop which is pretty old. Can we please get her a new lapto...
+                        </div></div></td></tr>
+            <tr class="hardware">
+                <td>10</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Hardware Requests')">🎯 Hardware Requests</td>
+                <td>Hardware & Equipment</td>
+                <td>86</td>
+                <td>2.0%</td>
+                <td>90.3</td>
+                <td>1.1</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-HardwareRequests" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Hardware Requests')">✕</button>
+                            <h4>🎯 Hardware Requests - 86 tickets (2.0%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25354</strong> | 
+                            <strong>4.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> New computer setup<br>
+                            <strong>Description:</strong> Good Morning, XPS still works - it is just not the computer for me. ( there is a delay when typing and the screen is to small) I am swapping it out wi...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26953</strong> | 
+                            <strong>3.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Paridha Oza (rehire) 6/25<br>
+                            <strong>Description:</strong> Working hours: IST2am-11am ESTAccounts: O365, Slack, TeamsNote for IT from the manager: She is a developer so an AWS VM will not work. We need to set ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-25363</strong> | 
+                            <strong>3.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Data Recovery - Ugandhar's laptop<br>
+                            <strong>Description:</strong> Sravan Needs access to user data Data Recovery - Ugandhar's laptop
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-25902</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Eddie Peterson laptop reprovision<br>
+                            <strong>Description:</strong> Alan Brady requested to give Forrest Phillips old laptop to Eddie Peterson since it is in better condition and Eddie's laptop is 9years old. Need to w...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26241</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Laptop Battery Error<br>
+                            <strong>Description:</strong> Hello, My laptop batter no longer holds a charged and has finally died on me. What do I need to do to get a replacement? Thanks! Matthew Constein | Sa...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26664</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> AWS not wokring<br>
+                            <strong>Description:</strong> Helo Team, Good Morning! Beulah and I need help on our AWS. It is not loading; regardless of how many times we started the AWS or restarted the whole ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26069</strong> | 
+                            <strong>2.9hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Ryan Boersma 5/27<br>
+                            <strong>Description:</strong> Additional equipment: buidling openaccess for lewisville office, employee will only need laptop, no monitor/keyboardLicenses needed: Fusion, MM-CSR, S...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-24737</strong> | 
+                            <strong>2.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Renee Shuff 3/3<br>
+                            <strong>Description:</strong> Sharepoint groups to add to: All ever.ag, USALicenses needed: DropboxNote from manager: Her official start date is Saturday March 1st so there is no b...
+                        </div></div></td></tr>
+            <tr class="user-mgmt">
+                <td>11</td>
+                <td class="clickable" onclick="toggleDetails('Other - Employee Setup')">Other - Employee Setup</td>
+                <td>User Management</td>
+                <td>79</td>
+                <td>1.8%</td>
+                <td>251.3</td>
+                <td>3.2</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-OtherEmployeeSetup" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Other - Employee Setup')">✕</button>
+                            <h4>Other - Employee Setup - 79 tickets (1.8%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-26294</strong> | 
+                            <strong>6.7hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Terry Partee 5/27<br>
+                            <strong>Description:</strong>  Onboarding: Terry Partee 5/27
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26436</strong> | 
+                            <strong>6.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> PROPOSE NEW 'ONBOARDING CHECKLIST (FULL TIME & CONTRACTOR)<br>
+                            <strong>Description:</strong> New process for onboarding (Full time & Contractor)Propose new process (NEW GROUP, LICENSE, ETC.); PROPOSE NEW 'ONBOARDING CHECKLIST (FULL TIME & CONT...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27431</strong> | 
+                            <strong>5.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Josh Lachs 9/2<br>
+                            <strong>Description:</strong> Josh is a rehire. Onboarding: Josh Lachs 9/2
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-26044</strong> | 
+                            <strong>5.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Michael Todd Rowen 5/5<br>
+                            <strong>Description:</strong>  Onboarding: Michael Todd Rowen 5/5
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27384</strong> | 
+                            <strong>5.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Krutik Shah 7/25<br>
+                            <strong>Description:</strong>  Onboarding: Krutik Shah 7/25
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26096</strong> | 
+                            <strong>4.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Tami OESTMANN 5/12<br>
+                            <strong>Description:</strong>  Onboarding: Tami OESTMANN 5/12
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-28136</strong> | 
+                            <strong>4.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Christy Johnson 9/15<br>
+                            <strong>Description:</strong>  Onboarding: Christy Johnson 9/15
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26216</strong> | 
+                            <strong>4.7hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Via Sumudlayon 6/9<br>
+                            <strong>Description:</strong> Microsourcing contractor, additional details pending from the manager Onboarding: Via Sumudlayon 6/9
+                        </div></div></td></tr>
+            <tr class="security">
+                <td>12</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Security Group Management')">🎯 Security Group Management</td>
+                <td>Security & Access</td>
+                <td>75</td>
+                <td>1.7%</td>
+                <td>95.1</td>
+                <td>1.3</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-SecurityGroupManagement" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Security Group Management')">✕</button>
+                            <h4>🎯 Security Group Management - 75 tickets (1.7%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27200</strong> | 
+                            <strong>27.5hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Remove IAM accounts from All AWS EverAg accounts<br>
+                            <strong>Description:</strong> Requirements:- Remove any IAM accounts across all EverAg AWS accounts- Inform users they have One Week before we remove their IAM account & setup SSO ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-27100</strong> | 
+                            <strong>6.9hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Migration to Windows 11 for RDP-Affected Users<br>
+                            <strong>Description:</strong> List of Users Affected by Current RDP Issue and Scheduled for Migration to Windows 11Maria Jadloc-Garcia - COMPLETEDIvan Pena - COMPLETEDVia Sumudlayo...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27628</strong> | 
+                            <strong>5.3hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Run Powershell Scripts (Continuation of #CorpIT-26838)<br>
+                            <strong>Description:</strong> Hi IT, Seeking assistance on this please. As per checking with Gainsight Support, we need to run PowerShell Scripts: Microsoft Article : https://help....
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24907</strong> | 
+                            <strong>3.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Abby Greiman 2/24<br>
+                            <strong>Description:</strong> Additional tech required: 2 monitors, headset, wireless keyboard and mouseSharepoint group to add to: All USALicenses needed: Adobe standard, certify,...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26107</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Fwd: Re: S3 Access<br>
+                            <strong>Description:</strong> Our customer can no longer get into S3. Can you please fix his access? ---------- Forwarded message ---------- From: Ramon Gomez <rgomez@milcgroup.com...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27356</strong> | 
+                            <strong>3.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> review sharepoint access<br>
+                            <strong>Description:</strong> Please work with Savannah on thisI’d like to review the Ever.Ag Intranet security set up to better understand how we are granting access and controlli...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-28894</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Awaiting Input</strong><br>
+                            <strong>Subject:</strong> URGENT - Extreme performance issue - PSCLOUD-TS200 - ProSoftXP host due to SentinelOne scan<br>
+                            <strong>Description:</strong> Hello, This request is urgent – we have a client just moved to a new system, and performance was acceptable until approximately 8AM today. At 8AM, Sen...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-28335</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> SSO - AWS Corp and Chicago FW issue<br>
+                            <strong>Description:</strong> Alex not able to do anything in AWS Workspaces even he's in SSO - AWS Corp Workspace Full AD GroupAlex not able to reach Chicago FW SSO - AWS Corp and...
+                        </div></div></td></tr>
+            <tr class="email">
+                <td>13</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Shared Mailbox Management')">🎯 Shared Mailbox Management</td>
+                <td>Email & Communication</td>
+                <td>62</td>
+                <td>1.4%</td>
+                <td>29.6</td>
+                <td>0.5</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-SharedMailboxManagement" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Shared Mailbox Management')">✕</button>
+                            <h4>🎯 Shared Mailbox Management - 62 tickets (1.4%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-24401</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Access to server not working<br>
+                            <strong>Description:</strong> Hi there, I am trying to access the shared server and getting an error. I am in the office today (Dallas) and it normally works with the office wifi. ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-25987</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Email Handles<br>
+                            <strong>Description:</strong> Good afternoon! Please create the following email handles (email distro and not shared email box) containing the members noted under each of the handl...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-24824</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Raheel Alwani shared the folder "TxO Team Folder" with you<br>
+                            <strong>Description:</strong> Hi Alex, Mark, Ricardo moved his personal Microsoft account to an Enterprise Account over the weekend. He is still having the same issue – “open in de...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-25866</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FortiClient VPN - Access to OPP Drive<br>
+                            <strong>Description:</strong> Hello there, I need access to the above VPN and drive please. I guess this is a shared site with the Foremost Payroll Team and I do not have access cu...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-25428</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Technology Review with Ever.Ag and Waypoint<br>
+                            <strong>Description:</strong> Hey Guys, What am I doing wrong? It doesn’t let me add the email addess with .co and it shows .com. Can you add the following? James Waletzky james.wa...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26302</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Shared mailbox not syncing folders<br>
+                            <strong>Description:</strong> Folder in shared mailbox FFUSAdispatch@silverlinklogistics.com are not syncing with desk top folders. I can see them on the web. Thank you Kent M Hick...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26580</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Create a shared onboarding email address for MDD<br>
+                            <strong>Description:</strong> Hi IT, Can you please create a shared email for the on-farm team available to external clients? We would like to have mddonboarding@ever.ag . Emails a...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26694</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> External SharePoint<br>
+                            <strong>Description:</strong> Hi there, An external party has shared files with me through their SharePoint. However, when I open the files I am getting the message below (i.e., I ...
+                        </div></div></td></tr>
+            <tr class="software">
+                <td>14</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Software License Requests')">🎯 Software License Requests</td>
+                <td>Software & Licensing</td>
+                <td>59</td>
+                <td>1.3%</td>
+                <td>35.9</td>
+                <td>0.6</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-SoftwareLicenseRequests" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Software License Requests')">✕</button>
+                            <h4>🎯 Software License Requests - 59 tickets (1.3%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25471</strong> | 
+                            <strong>3.4hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Rushita Banker 3/31<br>
+                            <strong>Description:</strong> Licenses: O365, need to assign the Visual Studio Test Pro license from Chirag Dalbanjan after exit over to Rushita.Information from the manager: They ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-25957</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Gabriel Waszak 5/27<br>
+                            <strong>Description:</strong> Note from manager: This intern will report to the Chicago office daily. He will need the standard setup minus the monitors.Phone line: Chicago (312), ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27299</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Acquiring IntelliJ IDEA License and Shifting existing WebStorm/DataGrip subscriptions to company account<br>
+                            <strong>Description:</strong> Hello, I would like to get an IntelliJ IDEA license now that my team is inheriting a Java codebase. Additionally, while we're at it, my manager Grant ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24687</strong> | 
+                            <strong>2.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Requests for migrating license renewals to the Ever.Ag IT team<br>
+                            <strong>Description:</strong> I've got two renewals I have managed in the past but, as I understand it, we need to migrate these to a centralized management under IT. I think it'd ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27044</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Urgent Phone Approval<br>
+                            <strong>Description:</strong> Need approval with my Dialpad login request. Matthew Wolf | Agent/Broker M:312-492-4260 mrw@ever.ag CONFIDENTIALITY NOTICE: This transmittal is a conf...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26858</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Power Automate Premium License<br>
+                            <strong>Description:</strong> Hello, I am requesting a Microsoft Power Automate premium license for zak.keeley@ever.ag; I’m currently using a 30 day premium free trial. Zak Keeley ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26613</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Insights Team- InDesign license Request<br>
+                            <strong>Description:</strong> Hello, I have been instructed by Erica Maedke to request that the entire Insights team be set up with InDesign licenses. Please let me know if you hav...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-28143</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>In Queue</strong><br>
+                            <strong>Subject:</strong> FW: Laptop replacement - Tiffany LaMendola<br>
+                            <strong>Description:</strong> Hello Team- I have been slow to get back to this but am now facing some bigger issues as I work with Brandon on the SharePoint transition. Will you ki...
+                        </div></div></td></tr>
+            <tr class="general">
+                <td>15</td>
+                <td class="clickable" onclick="toggleDetails('Other - Uncategorized')">Other - Uncategorized</td>
+                <td>General IT Support</td>
+                <td>55</td>
+                <td>1.3%</td>
+                <td>0.0</td>
+                <td>0.0</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-OtherUncategorized" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Other - Uncategorized')">✕</button>
+                            <h4>Other - Uncategorized - 55 tickets (1.3%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-24420</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Test escalation<br>
+                            <strong>Description:</strong> test Test escalation
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-24432</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> test<br>
+                            <strong>Description:</strong> test test
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26322</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> nan<br>
+                            <strong>Description:</strong>  
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-26836</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Reopen #CorpIT-26699<br>
+                            <strong>Description:</strong>  Reopen #CorpIT-26699
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27455</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> A Task Awaits You: Assign Pay Group - Data Change: Heather Levin<br>
+                            <strong>Description:</strong> Please log into the Workday system to complete this action. Click here to view the notification details. This email box is not monitored. Please do no...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27457</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> A Task Awaits You: Assign Pay Group - Promotion: Candi Katchmar<br>
+                            <strong>Description:</strong> Please log into the Workday system to complete this action. Click here to view the notification details. This email box is not monitored. Please do no...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-27466</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> A Task Awaits You: Assign Pay Group - Hire: Elizabeth Mitsdarffer<br>
+                            <strong>Description:</strong> Please log into the Workday system to complete this action. Click here to view the notification details. This email box is not monitored. Please do no...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27467</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Alert: New Hire - Elizabeth Mitsdarffer<br>
+                            <strong>Description:</strong> A new worker has been hired. Please review the following worker for accuracy: Elizabeth Mitsdarffer Click here to view the notification details. This ...
+                        </div></div></td></tr>
+            <tr class="general">
+                <td>16</td>
+                <td class="clickable" onclick="toggleDetails('Service Request - Uncategorized')">Service Request - Uncategorized</td>
+                <td>General IT Support</td>
+                <td>55</td>
+                <td>1.3%</td>
+                <td>1.2</td>
+                <td>0.0</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-ServiceRequestUncategorized" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Service Request - Uncategorized')">✕</button>
+                            <h4>Service Request - Uncategorized - 55 tickets (1.3%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27475</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Office Chair and Stand Up Desk<br>
+                            <strong>Description:</strong> We are in need of an office chair and one of our employees would like a stand up desk. I have attached their preference below.https://www.amazon.com/V...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-25072</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> IT Support Fallback has a new voicemail from Natalie Mccarty - 0:18<br>
+                            <strong>Description:</strong> New voicemail IT Support Fallback has received a new voicemail. IT Support Fallback (559) 238-1835 6:07PM Hey, this is Natalie McCarty my number is 55...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27688</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Hire - Successfully Completed<br>
+                            <strong>Description:</strong> This notification is regarding a NEW HIRE. Please review for your specific departmental reporting needs. Trevor Eaton is being hired on 08/11/2025 Cli...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-27703</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Hire - Successfully Completed<br>
+                            <strong>Description:</strong> This notification is regarding a NEW HIRE. Please review for your specific departmental reporting needs. Trevor Eaton is being hired on 08/18/2025 Cli...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27705</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Hire - Successfully Completed<br>
+                            <strong>Description:</strong> This notification is regarding a NEW HIRE. Please review for your specific departmental reporting needs. Natalie Lehman is being hired on 08/18/2025 C...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27707</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Termination - Successfully Completed<br>
+                            <strong>Description:</strong> This notification is regarding a TERMINATION. Please review for your specific departmental reporting needs. Bell Brown ( 100061 ) has been terminated,...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-27716</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Hire - Successfully Completed<br>
+                            <strong>Description:</strong> This notification is regarding a NEW HIRE. Please review for your specific departmental reporting needs. Muhammad Yasir Ashraf is being hired on 08/11...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27727</strong> | 
+                            <strong>0.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Termination - Successfully Completed<br>
+                            <strong>Description:</strong> This notification is regarding a TERMINATION. Please review for your specific departmental reporting needs. Ryan Boersma ( 100059 ) has been terminate...
+                        </div></div></td></tr>
+            <tr class="email">
+                <td>17</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Email Forwarding Setup')">🎯 Email Forwarding Setup</td>
+                <td>Email & Communication</td>
+                <td>53</td>
+                <td>1.2%</td>
+                <td>32.5</td>
+                <td>0.6</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-EmailForwardingSetup" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Email Forwarding Setup')">✕</button>
+                            <h4>🎯 Email Forwarding Setup - 53 tickets (1.2%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-26332</strong> | 
+                            <strong>3.4hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Auto Forwarding Issue (Immediate Action Required)<br>
+                            <strong>Description:</strong> Hi IT, Could you please assist in checking the current auto-forwarding configuration for payrollsupport@ever.ag? We are expecting that emails sent to ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26730</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> repeated email<br>
+                            <strong>Description:</strong> Hello, I’m hoping you can assist me with an issue I’m having with my outlook. I think it’s a Rule I created but I’m not sure. Today in I received an e...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26161</strong> | 
+                            <strong>2.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Order Entry connection<br>
+                            <strong>Description:</strong> Hello, Oak is currently down for me, and I called QST to see what was wrong so they wanted me to forward this over to y’all to hopefully fix it. Thank...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-27117</strong> | 
+                            <strong>1.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Access to "Access"<br>
+                            <strong>Description:</strong> Hello, I appear to have lost access to the Access program that we use for forward contracting reports. Lori tell me she is still able to see them but,...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-24890</strong> | 
+                            <strong>1.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Email Forwarding<br>
+                            <strong>Description:</strong> Hi IT, Requesting to setup email forwarding, please see below: prairiesystems-support@ever.ag and prairiesystems-apisupport@ever.ag To auto-forward em...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-25571</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Case#:00411969 - thread::VubCG40fekO2IqVMy9Ok0To::<br>
+                            <strong>Description:</strong> Please see below request from Phil Thank you, Justin Tibayan Case#:00411969 --------------- Original Message --------------- From: Ever.Ag Service Des...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25577</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Salesforce Email To Case Routing<br>
+                            <strong>Description:</strong> Good Morning, We have recently set up email to case in Salesforce for contract issues and we need to route the Salesforce auto generated email address...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-25815</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Roger Support Mailbox<br>
+                            <strong>Description:</strong> Hi IT, Can I please ask if there are any auto email forwarding being sent to "support@rogerthat.com"? It seems that when an email is sent to roger.inf...
+                        </div></div></td></tr>
+            <tr class="general">
+                <td>18</td>
+                <td class="clickable" onclick="toggleDetails('Service Request - nan')">Service Request - nan</td>
+                <td>General IT Support</td>
+                <td>51</td>
+                <td>1.2%</td>
+                <td>37.4</td>
+                <td>0.7</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-ServiceRequestnan" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Service Request - nan')">✕</button>
+                            <h4>Service Request - nan - 51 tickets (1.2%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-24669</strong> | 
+                            <strong>4.3hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Move server Coruscant to t3.2xlarge<br>
+                            <strong>Description:</strong> RE: Genuity | Help DeskI have work schedule tonight that I think it's a good opportunity to execute the EC2 instance upgrade for Coruscant from t2.2xl...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-24769</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Adding DMARC/SPF records<br>
+                            <strong>Description:</strong> RE:Genuity | Help DeskRequested by: Tim PopeRisks: Domains listed are no longer allowed to send emails Adding DMARC/SPF records
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26327</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Erika Young 5/15<br>
+                            <strong>Description:</strong> Additional details have been requested from the manager Offboarding: Erika Young 5/15
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-28716</strong> | 
+                            <strong>2.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Mail trace for DMARC Digest task<br>
+                            <strong>Description:</strong> Need to run a mailtrace to get source and more information for dairy.com domain emails Mail trace for DMARC Digest task
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27556</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Gnostice Document Studio Delphi Professional<br>
+                            <strong>Description:</strong> This is a link to the licensing we need: https://www.gnostice.com/XtremeDocumentStudio_Delphi.asp?show=buy+now Gnostice Document Studio Delphi Profess...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-24441</strong> | 
+                            <strong>1.7hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Move server Alderaan to t3.medium<br>
+                            <strong>Description:</strong> RE:Genuity | Help DeskI have work schedule tonight that I think it's a good opportunity to execute the EC2 instance upgrade for Alderaan from t2.mediu...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25258</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Integrate Old Orbis support and Orbis Maintenance DL to new DL<br>
+                            <strong>Description:</strong> Original ticket: https://everag.gogenuity.com/help_tickets/2801080Since we already have new DL for Orbis support and Orbis Maintenance and Both Old DL...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26688</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Email delegation and Mailtrace<br>
+                            <strong>Description:</strong> RE: Genuity | Help Deskthis mailbox is full, but don't know who's using this and what is this use for. Need to delegate myself to this email and start...
+                        </div></div></td></tr>
+            <tr class="software">
+                <td>19</td>
+                <td class="clickable" onclick="toggleDetails('🎯 System/Software Updates')">🎯 System/Software Updates</td>
+                <td>Software & Licensing</td>
+                <td>50</td>
+                <td>1.1%</td>
+                <td>78.8</td>
+                <td>1.6</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-SystemSoftwareUpdates" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 System/Software Updates')">✕</button>
+                            <h4>🎯 System/Software Updates - 50 tickets (1.1%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27341</strong> | 
+                            <strong>9.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Windows Server Update<br>
+                            <strong>Description:</strong> Windows Server Patch Management / Windows Server UpdateUpdate Guide1. Make sure it’s qualified with the availability time.2. Make sure that there is n...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-27664</strong> | 
+                            <strong>8.0hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> recent update unable to work efficiently<br>
+                            <strong>Description:</strong> After a recent forced update (non Microsoft) it is taking up so much memory on my computer I can barely open browsers, my laptop is incredibly slow. U...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26228</strong> | 
+                            <strong>6.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Windows Server Patch<br>
+                            <strong>Description:</strong> We will start for these few servers to better plan for the next planned windows server updateUpdate Guide1. Make sure it’s qualified with the availabi...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-26996</strong> | 
+                            <strong>6.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Windows Server Update<br>
+                            <strong>Description:</strong> Windows Server Patch Management / Windows Server UpdateUpdate Guide1. Make sure it’s qualified with the availability time.2. Make sure that there is n...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26992</strong> | 
+                            <strong>6.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> AWS WorkSpace - unable to connect to VM via RDP<br>
+                            <strong>Description:</strong> Hi,Please help. After receiving system updates from EFC Systems via N-ABLE and the installation of new Windows patches, I restarted my AWS WorkSpace. ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27209</strong> | 
+                            <strong>4.9hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Windows Server Update<br>
+                            <strong>Description:</strong> Windows Server Patch Management / Windows Server UpdateUpdate Guide1. Make sure it’s qualified with the availability time.2. Make sure that there is n...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-28785</strong> | 
+                            <strong>4.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Windows Server Update<br>
+                            <strong>Description:</strong> Windows Server Patch Management / Windows Server UpdateUpdate Guide1. Make sure it’s qualified with the availability time.2. Make sure that there are ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26352</strong> | 
+                            <strong>3.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Windows Updates Installed to Support Video Editing Workflow<br>
+                            <strong>Description:</strong> Hi, I am experiencing problems with my Adobe Premiere Pro editing software when troubleshooting it asks me to install available Windows Updates which ...
+                        </div></div></td></tr>
+            <tr class="user-mgmt">
+                <td>20</td>
+                <td class="clickable" onclick="toggleDetails('Other - Account Managment')">Other - Account Managment</td>
+                <td>User Management</td>
+                <td>50</td>
+                <td>1.1%</td>
+                <td>15.7</td>
+                <td>0.3</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-OtherAccountManagment" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Other - Account Managment')">✕</button>
+                            <h4>Other - Account Managment - 50 tickets (1.1%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27845</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Investigate Dallas Sipes AD and Email accounts<br>
+                            <strong>Description:</strong> Dallas Sipes AD and O365 license:I suspect this is a duplicate account.Please check with Dallas Chapman, figure out if it's used. If not, figure out i...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-28598</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> User at risk detected<br>
+                            <strong>Description:</strong> User at risk detected See your report. User at risk detected We detected a new user with at least medium risk in your Ever.Ag directory. This might be...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27076</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding - Bono Vidakovic<br>
+                            <strong>Description:</strong> Today is Bono Vidakovic’s final working day, with his contract expiring at the end of the day.His accounts can now be deactivated from the following s...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24790</strong> | 
+                            <strong>0.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Create Confluence Guide How to add Danone User on servu.ever.ag former DSI_FTP / dsiftp.dataspecialists.com<br>
+                            <strong>Description:</strong> Create Confluence Guide How to add Danone User on servu.ever.ag former DSI_FTP / dsiftp.dataspecialists.com Create Confluence Guide How to add Danone ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-25345</strong> | 
+                            <strong>0.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Dialpad<br>
+                            <strong>Description:</strong> Hello,Can you please set me up with a Dialpad number?Thank you,Jill Ann Dialpad
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27844</strong> | 
+                            <strong>0.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Investigate Christina Martin AD and Email accounts<br>
+                            <strong>Description:</strong> Christina Martin AD and O365 license:I suspect this is a duplicate account.Please check with Chrissa Martin, figure out if it's used. If not, figure o...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-28545</strong> | 
+                            <strong>0.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Standardized Email Alias<br>
+                            <strong>Description:</strong> Can we set up email aliases for these ppl using the standard convention (jane.doe@ever.ag), and audit to see any other outliers? It should be standard...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26036</strong> | 
+                            <strong>0.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Email address change<br>
+                            <strong>Description:</strong> Is it possible to change my email address to: jen.gordon@ever.agThank you, Jen Gordon 515-570-4186 Email address change
+                        </div></div></td></tr>
+            <tr class="general">
+                <td>21</td>
+                <td class="clickable" onclick="toggleDetails('Password Reset/Account Lockout')">Password Reset/Account Lockout</td>
+                <td>General IT Support</td>
+                <td>48</td>
+                <td>1.1%</td>
+                <td>32.6</td>
+                <td>0.7</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-PasswordResetAccountLockout" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Password Reset/Account Lockout')">✕</button>
+                            <h4>Password Reset/Account Lockout - 48 tickets (1.1%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-26854</strong> | 
+                            <strong>7.3hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Reset multiple users credentials<br>
+                            <strong>Description:</strong> Please reset credentials (passwords/mfa) for the following users: Damien Kearney Eunice McCarthy Ursula Cole Helen Goode Pat Doody Anthony Carroll Ash...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-25563</strong> | 
+                            <strong>2.9hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Changed windows password, can't login in office<br>
+                            <strong>Description:</strong> Hi, it's my first day back to the office since changing my password. I can't logon to the office network. What do I need to do? It doesn't ask for pas...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26731</strong> | 
+                            <strong>1.4hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Your SSL Certificate will expire in 10 days.<br>
+                            <strong>Description:</strong> I’m working on renewing this SSL Certificate. Thank you. Best regards, Reynaldo Dantes | System Administrator Ever.Ag Empowering Supply Chains to Feed...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24614</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> reset vpn password<br>
+                            <strong>Description:</strong> For some reason my VPN password is not working, again. Please reset it. ------------------- The information contained in this email is intended for th...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-25080</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> PIN Error<br>
+                            <strong>Description:</strong> Hi IT team – Quick question, following the computer updates last week, my PIN no longer works. It keeps telling me to restart…but, after multiple rest...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-24492</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> reset VPN credentials<br>
+                            <strong>Description:</strong> Please reset my password and MFA for the VPN. I have a new phone and need to set it up. Thanks! ------------------- The information contained in this ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25808</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Apple ID Password<br>
+                            <strong>Description:</strong> Hello, I forget my Apple ID password. When I try to reset, it is requiring an admin password. Can you please help? Thanks, Nellie Mitchell | Director ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26152</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Fw: ALERT: Contact Form<br>
+                            <strong>Description:</strong> Hi there, I received this inquiry via the website form and this person needs assistance logging in to get milk check deposit information. Can you assi...
+                        </div></div></td></tr>
+            <tr class="security">
+                <td>22</td>
+                <td class="clickable" onclick="toggleDetails('🎯 MFA Setup and Issues')">🎯 MFA Setup and Issues</td>
+                <td>Security & Access</td>
+                <td>46</td>
+                <td>1.1%</td>
+                <td>28.8</td>
+                <td>0.6</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-MFASetupandIssues" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 MFA Setup and Issues')">✕</button>
+                            <h4>🎯 MFA Setup and Issues - 46 tickets (1.1%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25562</strong> | 
+                            <strong>3.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> ENFORCED MFA USERS<br>
+                            <strong>Description:</strong> Enforced all user MFAExecute here: https://entra.microsoft.com/#view/Microsoft_AAD_IAM/MultifactorAuthenticationConfig.ReactViewList : https://dairydd...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26192</strong> | 
+                            <strong>2.7hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> RE: On move<br>
+                            <strong>Description:</strong> Aaaah I think this is a multifactor authentication issue. @IT Support can I raise a ticket on Jim’s behalf, please? He needs some support on getting a...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26647</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Remove two-factor authentication<br>
+                            <strong>Description:</strong> Remove two-factor authentication for Terry Partee in Autotask Remove two-factor authentication
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-26872</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Ever.Ag Platform<br>
+                            <strong>Description:</strong> Good morning! In working with QST, our quote vendor, the following was discovered upon setting up a new Ever.Ag Platform for a customer. When a custom...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-24913</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Not receiving emails to gcupps@vaultdairy.com<br>
+                            <strong>Description:</strong> Hi, I don’t seem to be receiving emails to gcupps@vaultdairy.com today. Can you please look into that? I’m trying to get into an account, but I’m not ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27227</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Jira Salesforce Case Integration Key<br>
+                            <strong>Description:</strong> From: Yogesh Rankawat <yogesh@appronex.com> Sent: Thursday, July 10, 2025 8:17 PM To: Kenrick Daza <kenrick.daza@ever.ag> Cc: Chris Sirosky <chris.sir...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-27188</strong> | 
+                            <strong>0.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> VPN Support<br>
+                            <strong>Description:</strong> Hi all, Last week I contacted about obtaining EverAg VPN access, I have received instructions and have the FortiClient and DUO app setup, however I am...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27367</strong> | 
+                            <strong>0.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Microsoft Authenticator App Help<br>
+                            <strong>Description:</strong> Good afternoon, I got a new phone and new phone number and need help setting up the Microsoft Authenticator App. I need it for my Deel log in in parti...
+                        </div></div></td></tr>
+            <tr class="specialized">
+                <td>23</td>
+                <td class="clickable" onclick="toggleDetails('Other - Applications')">Other - Applications</td>
+                <td>Specialized Applications</td>
+                <td>45</td>
+                <td>1.0%</td>
+                <td>23.9</td>
+                <td>0.5</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-OtherApplications" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Other - Applications')">✕</button>
+                            <h4>Other - Applications - 45 tickets (1.0%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25727</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding Report<br>
+                            <strong>Description:</strong> Good morning,Would it be possible to get a report from Genuity on your offboarding tickets? Specifically, the name of the person offboarded, the date ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26653</strong> | 
+                            <strong>1.9hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> IT Support Fallback has a new voicemail from Natalie Mccarty - 0:18<br>
+                            <strong>Description:</strong> Dialpad New voicemail IT Support Fallback has received a new voicemail. IT Support Fallback (559) 238-1835 1:34PM Hi, this is Natalie McCarty. If you ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26317</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Organize and Update Figma Saas Entry<br>
+                            <strong>Description:</strong> Organize and Update Figma Saas EntryView, Collab, Dev and Full Seats Organize and Update Figma Saas Entry
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-24789</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Create Confluence guide for How to set up windows existing machine not joined on Ever.ag domain<br>
+                            <strong>Description:</strong> Create Confluence Guide Create Confluence guide for How to set up windows existing machine not joined on Ever.ag domain
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26540</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Add PBI Premium License for user<br>
+                            <strong>Description:</strong> Please give Robert Nelson a PowerBI Premium license. Thank you Add PBI Premium License for user
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-28062</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Integtate ToDoist and Outlook Calendar<br>
+                            <strong>Description:</strong> Can I please get approval for this integration so I can sync our task management with ToDoist to line up with our scheduled events in Outlook? Integta...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26891</strong> | 
+                            <strong>0.9hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> XML Editor<br>
+                            <strong>Description:</strong> Hi friends, Does Ever.ag have any enterprise licenses for any XML Editor software? XML Editor
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-26443</strong> | 
+                            <strong>0.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> VPN connection is unstable<br>
+                            <strong>Description:</strong> The VPN keeps on disconnecting VPN connection is unstable
+                        </div></div></td></tr>
+            <tr class="email">
+                <td>24</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Email Signature Updates')">🎯 Email Signature Updates</td>
+                <td>Email & Communication</td>
+                <td>43</td>
+                <td>1.0%</td>
+                <td>56.6</td>
+                <td>1.3</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-EmailSignatureUpdates" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Email Signature Updates')">✕</button>
+                            <h4>🎯 Email Signature Updates - 43 tickets (1.0%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-26007</strong> | 
+                            <strong>20.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Install Issue<br>
+                            <strong>Description:</strong> Hello Team, Hope you are doing well! I have installed FortiClient vpn on my everag PC using below link, however, it gives me error. https://83.71.147....
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-25255</strong> | 
+                            <strong>4.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Orbis Office - OIS200 AD - RAID disk failure<br>
+                            <strong>Description:</strong> Hello, You are probably aware, but a disk has failed in OIS200 physical server (AD/file server ORB-IS.COM). If it is not replaced before another disk ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-28262</strong> | 
+                            <strong>3.7hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Irish Domain names query<br>
+                            <strong>Description:</strong> Hello, I would be grateful if you could send me the list of the domain names registered and what company they are registered with, for the Irish compa...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-27898</strong> | 
+                            <strong>3.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> awsddcdisprod01 -  SentinelOne - uninstall<br>
+                            <strong>Description:</strong> Hello, This weekend, we will be upgrading the Ubuntu OS on the production server awsddcdisprod01 in the DDC AWS account from version 16 to 18, then to...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27570</strong> | 
+                            <strong>3.1hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> New Laptop setup<br>
+                            <strong>Description:</strong> Hi there I'm finally setting up my new laptop but unfortunately the screen on the laptop is not displaying anything at all, it is displaying the set u...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-24530</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Re: Charger<br>
+                            <strong>Description:</strong> Hi Elaine, I don't have access to Orbis shipping accounts. Ursula was always taking care of shipping. I'm copying Corp IT, they might be able to get y...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26649</strong> | 
+                            <strong>1.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Intuitve.Cloud Access to DDC Slack channels<br>
+                            <strong>Description:</strong> Hello Team, Intuitive.Cloud needs to post from their Jira using Slack integration to the following DDC channels: - dairy-system-alerts - critical-prod...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-25078</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Urgent<br>
+                            <strong>Description:</strong> Hi Team , My laptop screen turned black while on a Teams call 10 mins ago , it's still black ,I can't power it up or down , though it sounds like its ...
+                        </div></div></td></tr>
+            <tr class="specialized">
+                <td>25</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Teams Setup')">🎯 Teams Setup</td>
+                <td>Specialized Applications</td>
+                <td>42</td>
+                <td>1.0%</td>
+                <td>33.0</td>
+                <td>0.8</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-TeamsSetup" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Teams Setup')">✕</button>
+                            <h4>🎯 Teams Setup - 42 tickets (1.0%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27198</strong> | 
+                            <strong>3.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Onboarding: Dileep Sharma 8/11<br>
+                            <strong>Description:</strong> Please ensure access toAdobe ProMicrosoft Teams ProPowerBISalesforceOneDrive - Marketing User Onboarding: Dileep Sharma 8/11
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-25534</strong> | 
+                            <strong>3.3hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Teams - Teams Security Configurations<br>
+                            <strong>Description:</strong> To follow best security practices, we need to update certain settings in the Teams admin panel: Restrict access to external domains Use: Block only sp...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-25445</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Microsoft Teams Add in for Outlook Missing<br>
+                            <strong>Description:</strong> Good Afternoon: This add is no longer on my menu. I looked in the add ins and don’t see it. Can someone assist vs. having to open Teams and do these. ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-26197</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Teams Agenda Access<br>
+                            <strong>Description:</strong> Hi Team, I am trying to add notes to an agenda (in Teams), for a meeting that I am the owner of, and I'm getting the following message. Any thoughts o...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-25576</strong> | 
+                            <strong>1.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Teams Security Configurations - Allow only specific external domains<br>
+                            <strong>Description:</strong> Original ticket: CorpIT-25534Other related ticket: CorpIT-25440Objective : To follow best security practicesPropose by: Security Team Tim pope and Rob...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-24551</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> JW2 teams channel<br>
+                            <strong>Description:</strong> Hi, I got removed from JW2 teams channel under rogerthat.com channel. This was locked down to just me and Jay. I need this access back ASAP – have cus...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25583</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Unable to connect with our client on Teams<br>
+                            <strong>Description:</strong> Hi IT Support Team, I’m the PM for the Coles program and are having issues to connect and collaborate with Coles people on Teams today. We are not abl...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-25909</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Teams disconnecting repeatedly<br>
+                            <strong>Description:</strong> In Teams meetings I keep getting cut off, then it reconnects automatically with garbled voices and then it’s normal for a minute and 5 minutes later i...
+                        </div></div></td></tr>
+            <tr class="hardware">
+                <td>26</td>
+                <td class="clickable" onclick="toggleDetails('🎯 System Monitoring Alerts')">🎯 System Monitoring Alerts</td>
+                <td>Hardware & Equipment</td>
+                <td>41</td>
+                <td>0.9%</td>
+                <td>42.0</td>
+                <td>1.0</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-SystemMonitoringAlerts" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 System Monitoring Alerts')">✕</button>
+                            <h4>🎯 System Monitoring Alerts - 41 tickets (0.9%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27246</strong> | 
+                            <strong>7.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Laptop down (Laptop Replacement)<br>
+                            <strong>Description:</strong> Good morning, I've had issues with my laptop this morning. It would t start up, so it took me through a restart process. This is what my screen looks ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-28867</strong> | 
+                            <strong>6.8hrs</strong> | 
+                            <strong>Pending Shipping</strong><br>
+                            <strong>Subject:</strong> Computer Shutting Down<br>
+                            <strong>Description:</strong> Hi IT Team, I installed some general Dell updates yesterday that I was notified needed to be taken care of, and since I did that my computer has been ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-24839</strong> | 
+                            <strong>6.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Mac Crashing - Panic App Error<br>
+                            <strong>Description:</strong> Macbook Pro continually crashes, tried doing software update but initiating the update causes the crash to occur every time. Showed Alex at HQ. He is ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-28784</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Re: Introduction To Bruce - EDL Contract Sales Position<br>
+                            <strong>Description:</strong> Hey IT team, Can somebody please assist Bruce with email access, please? Thank you! Jill Ann Cosentino | VP, People and Culture 4400 State Highway 121...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-26930</strong> | 
+                            <strong>1.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Re: Domain & SSL Cert upcoming for renewal | CorpIT-26731<br>
+                            <strong>Description:</strong> Unfortunately I was ill this last week and so while I was working on things I spaced this important item. Our current certificate is now expired but I...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-27514</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Problem with links and downloads<br>
+                            <strong>Description:</strong> Trying to install an ever.ag program but its flagged by the system. ------------------- The information contained in this email is intended for the ad...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-27003</strong> | 
+                            <strong>1.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Pending Downloads<br>
+                            <strong>Description:</strong> Good afternoon, I have a bunch of pending downloads on my computer. I did not get a pop up yesterday for the monthly updates. Is there a way I can pus...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27426</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Laptop Slowdown<br>
+                            <strong>Description:</strong> Hi Team , Experiencing issues / slowness connecting to Teams calls , setting up calendar events etc . Taking a long time to log into Lattice ,app shut...
+                        </div></div></td></tr>
+            <tr class="email">
+                <td>27</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Email List Management')">🎯 Email List Management</td>
+                <td>Email & Communication</td>
+                <td>41</td>
+                <td>0.9%</td>
+                <td>25.9</td>
+                <td>0.6</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-EmailListManagement" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Email List Management')">✕</button>
+                            <h4>🎯 Email List Management - 41 tickets (0.9%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-27127</strong> | 
+                            <strong>3.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> TeamViewer Shared list for On-Farm<br>
+                            <strong>Description:</strong> Hi IT, Are you able to help me create a shared TeamViewer list for the On-Farm team? These will include the following team members to add accounts to:...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-27558</strong> | 
+                            <strong>1.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Genella Howland -Did not receive email sent to allmanagers distribution list<br>
+                            <strong>Description:</strong> Hi Team, Genella Howland made me aware that she did not receive an email I sent on 6/4 at 8CT regarding mid-year check ins. I show that she is on the ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-28022</strong> | 
+                            <strong>1.6hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> FW: Fw: Final Reminder UDM Legacy URL Data Feeds Discontinued<br>
+                            <strong>Description:</strong> Hey IT, Can you please answer Jochen’s question below? Does the jochen@freshagenda.com.au email address exist? (This is our domain from the FreshAgend...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-28810</strong> | 
+                            <strong>1.6hrs</strong> | 
+                            <strong>In Queue</strong><br>
+                            <strong>Subject:</strong> FW: Add Jessica Itsede and Trista Freeman to AlertOps contact list for Fusion, Mobile Manifest, and Phoenix Alerts<br>
+                            <strong>Description:</strong> IT team, can you add the two users to AlertOps listed below? From: Tony Hopkins <tony.hopkins@ever.ag> Sent: 03 October 2025 16:32 To: Chris Sirosky <...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-25087</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Email List Sharing<br>
+                            <strong>Description:</strong> Hello, Matt Wolf & I would like to be able to share a "list" (or multiple different lists) of contact names that we can both add, delete, see, &/or em...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-25222</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> URGENT ESCALATION!!!! - Re: CorpIT-25197 - New Email addresses to replace OrbisMes domain - Unexpected Incident<br>
+                            <strong>Description:</strong> Morning All, Based on the below error, some of our customers are receiving sensitive customer data from other customers. Specifically Sinead.Flannery1...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-26417</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Request to Create New Distribution List for Tessell POC<br>
+                            <strong>Description:</strong> Hi Corp IT Team, I hope you're doing well. I'd like to request the creation of a new email distribution list for the Tessell Proof of Concept (POC). B...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-28277</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Test Email<br>
+                            <strong>Description:</strong> Good morning, We need to make edits to the following list: prairiesystems-basecamp@ever.ag , there should be 5 people. Please remove the following peo...
+                        </div></div></td></tr>
+            <tr class="security">
+                <td>28</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Account Lockout Issues')">🎯 Account Lockout Issues</td>
+                <td>Security & Access</td>
+                <td>41</td>
+                <td>0.9%</td>
+                <td>22.2</td>
+                <td>0.5</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-AccountLockoutIssues" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Account Lockout Issues')">✕</button>
+                            <h4>🎯 Account Lockout Issues - 41 tickets (0.9%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25342</strong> | 
+                            <strong>2.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Locked out of Microsoft Sharepoint<br>
+                            <strong>Description:</strong> Good Morning, I am locked out of Microsoft and specifically sharepoint this morning. Am able to open my email on my desktop but am not able to open sh...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26716</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Locked out<br>
+                            <strong>Description:</strong> Hello, I have locked myself out of my laptop and need my password reset/machine unlocked asap please. Thanks, Aarti ------------------- The informatio...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-24632</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> audit duo<br>
+                            <strong>Description:</strong> Audit https://admin-60b0c975.duosecurity.com/users DUO users.Anyone that has there AD account disabled delete in DUOThen create Genutiy SaaS entry and...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-26806</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Fw: Order Entry Server Issue<br>
+                            <strong>Description:</strong> Can you help me by working with QST support in resolving this issue? Kristin Stien | Sr. Grain Market Advisor Ever.Ag Empowering Supply Chains to Feed...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-25029</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Unable to reach db1.dallas.dairy.com<br>
+                            <strong>Description:</strong> Hello, I am once again unable to reach db1.dallas.dairy.com. I am connected via Forticlient VPN, and have no issue reaching other servers. Can you ple...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26159</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Disabled Google Account<br>
+                            <strong>Description:</strong> Good morning, I tried logging into my Google account and received message below. Is there a way to re-activate the account? I need to work on some fil...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-27329</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Outlook not working<br>
+                            <strong>Description:</strong> I've been on the road all week. I haven't downloaded intune. I'm locked out of outlook. what do I do? tom Get Outlook for iOS ------------------- The ...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-28523</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Unlock my P drive<br>
+                            <strong>Description:</strong> I need to access the P drive and it’s telling me that my account is locked out. I am logged into the VPN. Please help unlock me! Wanda Mees 209-648-43...
+                        </div></div></td></tr>
+            <tr class="general">
+                <td>29</td>
+                <td class="clickable" onclick="toggleDetails('Access Request - nan')">Access Request - nan</td>
+                <td>General IT Support</td>
+                <td>34</td>
+                <td>0.8%</td>
+                <td>23.6</td>
+                <td>0.7</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-AccessRequestnan" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('Access Request - nan')">✕</button>
+                            <h4>Access Request - nan - 34 tickets (0.8%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-24666</strong> | 
+                            <strong>2.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Josiah Paulsrud 2/7<br>
+                            <strong>Description:</strong> Not sure if I have all the access boxes checked above. Offboarding: Josiah Paulsrud 2/7
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-26776</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Marissa Vosberg 6/11<br>
+                            <strong>Description:</strong> Please turn off all access Offboarding: Marissa Vosberg 6/11
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-27148</strong> | 
+                            <strong>2.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Charlie Hoffman 7/3<br>
+                            <strong>Description:</strong> Also has access to Maternity Warden, Feed King, Cainthus, Asana and MDD google account Offboarding: Charlie Hoffman 7/3
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-25169</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Kayleigh Przygoda 2/28<br>
+                            <strong>Description:</strong> She also has access to Greenhouse Offboarding: Kayleigh Przygoda 2/28
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-27447</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Quincee Johnson 7/23<br>
+                            <strong>Description:</strong> Also has access to FieldAlytics Offboarding: Quincee Johnson 7/23
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-28852</strong> | 
+                            <strong>1.5hrs</strong> | 
+                            <strong>In Progress</strong><br>
+                            <strong>Subject:</strong> Offboarding: Eric McMillan 10/7<br>
+                            <strong>Description:</strong> Dialpad access as well. Offboarding: Eric McMillan 10/7
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-27042</strong> | 
+                            <strong>1.2hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Paula Danovsky 6/25<br>
+                            <strong>Description:</strong> See ticket #CorpIT-26374 for full list of access Offboarding: Paula Danovsky 6/25
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-27074</strong> | 
+                            <strong>1.0hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Offboarding: Bill Curley 6/30<br>
+                            <strong>Description:</strong> I am submitting on behalf of the manager and will let you know if there is access to other systems not indicated. Offboarding: Bill Curley 6/30
+                        </div></div></td></tr>
+            <tr class="security">
+                <td>30</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Intune Setup and Conditional Access')">🎯 Intune Setup and Conditional Access</td>
+                <td>Security & Access</td>
+                <td>32</td>
+                <td>0.7%</td>
+                <td>719.1</td>
+                <td>22.5</td>
+                <td><span class="automation-tag">HIGH</span></td>
+            </tr>
+                <tr>
+                    <td colspan="8">
+                        <div id="details-IntuneSetupandConditionalAccess" class="detail-panel">
+                            <button class="close-btn" onclick="closeDetails('🎯 Intune Setup and Conditional Access')">✕</button>
+                            <h4>🎯 Intune Setup and Conditional Access - 32 tickets (0.7%)</h4>
+                        <div class="ticket-item">
+                            <strong>#1 - CorpIT-25038</strong> | 
+                            <strong>474.2hrs</strong> | 
+                            <strong>In Progress</strong><br>
+                            <strong>Subject:</strong> Intune and Conditional Access Rollout<br>
+                            <strong>Description:</strong> Project for rolling out Intune & CA Intune and Conditional Access Rollout
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#2 - CorpIT-24896</strong> | 
+                            <strong>146.9hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Intune Setup and Conditional Access - Different assigned users<br>
+                            <strong>Description:</strong> Setup Intune and Conditional Access to different assigned usersEnrico -doneJan Prins -doneAmy Klein -doneRyan Boschma -doneMeg Johnston - pending CA -...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#3 - CorpIT-26672</strong> | 
+                            <strong>27.9hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Intune Setup and Conditional Access<br>
+                            <strong>Description:</strong> Erica Maedke - Intune and CA successfullyMichael Roberts - Intune and CA successfullySean Conant - Intune and CA successfullyAlondra Macias- Intune an...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#4 - CorpIT-28788</strong> | 
+                            <strong>24.5hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Intune Setup and Conditional Access - Old Ticket Time Entry is  broken<br>
+                            <strong>Description:</strong> Intune Setup and Conditional Access - Different assigned users CorpIT-24896 - Old Ticket Time Entry is broken Intune Setup and Conditional Access - Ol...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#5 - CorpIT-24378</strong> | 
+                            <strong>12.8hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Infra Client Service Intune Setup and Conditional Access<br>
+                            <strong>Description:</strong> Setup Intune and Conditional Access To these usersLucas TrailMilton StanleyWes DundonLaura Toney Infra Client Service Intune Setup and Conditional Acc...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#6 - CorpIT-26659</strong> | 
+                            <strong>4.5hrs</strong> | 
+                            <strong>Task</strong><br>
+                            <strong>Subject:</strong> Intune Setup and Conditional Access<br>
+                            <strong>Description:</strong> Set up Intune and Conditional Access for different assigned users Intune Setup and Conditional Access
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#7 - CorpIT-25900</strong> | 
+                            <strong>4.1hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> Genuity to O365/Entra ID connector issue<br>
+                            <strong>Description:</strong> O365 and Entra ID is not syncing in Genuity due to issue in Conditional Access implemented to user account use to sync. Genuity to O365/Entra ID conne...
+                        </div>
+                        <div class="ticket-item">
+                            <strong>#8 - CorpIT-24817</strong> | 
+                            <strong>3.5hrs</strong> | 
+                            <strong>Closed</strong><br>
+                            <strong>Subject:</strong> DevOps Intune Setup and Conditional Access<br>
+                            <strong>Description:</strong> Setup Intune and Conditional Access To these usersAndrzej FimaKarl SvecRusty Burnett DevOps Intune Setup and Conditional Access
+                        </div></div></td></tr>
+            <tr class="admin">
+                <td>31</td>
+                <td class="clickable" onclick="toggleDetails('Other - Task')">Other - Task</td>
+                <td>Administrative Tasks</td>
+                <td>31</td>
+                <td>0.7%</td>
+                <td>1,174.2</td>
+                <td>37.9</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="user-mgmt">
+                <td>32</td>
+                <td class="clickable" onclick="toggleDetails('Access Request - Account Managment')">Access Request - Account Managment</td>
+                <td>User Management</td>
+                <td>29</td>
+                <td>0.7%</td>
+                <td>34.7</td>
+                <td>1.2</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="specialized">
+                <td>33</td>
+                <td class="clickable" onclick="toggleDetails('Access Request - Applications')">Access Request - Applications</td>
+                <td>Specialized Applications</td>
+                <td>29</td>
+                <td>0.7%</td>
+                <td>15.4</td>
+                <td>0.5</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="user-mgmt">
+                <td>34</td>
+                <td class="clickable" onclick="toggleDetails('Service Request - Account Managment')">Service Request - Account Managment</td>
+                <td>User Management</td>
+                <td>27</td>
+                <td>0.6%</td>
+                <td>8.8</td>
+                <td>0.3</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="infrastructure">
+                <td>35</td>
+                <td class="clickable" onclick="toggleDetails('Other - Networking/Server')">Other - Networking/Server</td>
+                <td>Infrastructure & Network</td>
+                <td>25</td>
+                <td>0.6%</td>
+                <td>75.5</td>
+                <td>3.0</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="specialized">
+                <td>36</td>
+                <td class="clickable" onclick="toggleDetails('Technical Issue - Applications')">Technical Issue - Applications</td>
+                <td>Specialized Applications</td>
+                <td>23</td>
+                <td>0.5%</td>
+                <td>25.3</td>
+                <td>1.1</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="general">
+                <td>37</td>
+                <td class="clickable" onclick="toggleDetails('Service Request - Domain Tools')">Service Request - Domain Tools</td>
+                <td>General IT Support</td>
+                <td>22</td>
+                <td>0.5%</td>
+                <td>10.2</td>
+                <td>0.5</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="user-mgmt">
+                <td>38</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Permission Changes')">🎯 Permission Changes</td>
+                <td>User Management</td>
+                <td>20</td>
+                <td>0.5%</td>
+                <td>13.1</td>
+                <td>0.7</td>
+                <td><span class="automation-tag">MEDIUM</span></td>
+            </tr>
+            <tr class="general">
+                <td>39</td>
+                <td class="clickable" onclick="toggleDetails('Other - Employee Off-boarding')">Other - Employee Off-boarding</td>
+                <td>General IT Support</td>
+                <td>20</td>
+                <td>0.5%</td>
+                <td>24.2</td>
+                <td>1.2</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="user-mgmt">
+                <td>40</td>
+                <td class="clickable" onclick="toggleDetails('🎯 User Account Deactivation')">🎯 User Account Deactivation</td>
+                <td>User Management</td>
+                <td>19</td>
+                <td>0.4%</td>
+                <td>11.2</td>
+                <td>0.6</td>
+                <td><span class="automation-tag">MEDIUM</span></td>
+            </tr>
+            <tr class="software">
+                <td>41</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Adobe License Management')">🎯 Adobe License Management</td>
+                <td>Software & Licensing</td>
+                <td>19</td>
+                <td>0.4%</td>
+                <td>21.8</td>
+                <td>1.1</td>
+                <td><span class="automation-tag">MEDIUM</span></td>
+            </tr>
+            <tr class="general">
+                <td>42</td>
+                <td class="clickable" onclick="toggleDetails('Other - Domain Tools')">Other - Domain Tools</td>
+                <td>General IT Support</td>
+                <td>19</td>
+                <td>0.4%</td>
+                <td>25.4</td>
+                <td>1.3</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="maintenance">
+                <td>43</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Disk Space Issues')">🎯 Disk Space Issues</td>
+                <td>System Maintenance</td>
+                <td>18</td>
+                <td>0.4%</td>
+                <td>24.6</td>
+                <td>1.4</td>
+                <td><span class="automation-tag">MEDIUM</span></td>
+            </tr>
+            <tr class="infrastructure">
+                <td>44</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Firewall Issues')">🎯 Firewall Issues</td>
+                <td>Infrastructure & Network</td>
+                <td>18</td>
+                <td>0.4%</td>
+                <td>6.7</td>
+                <td>0.4</td>
+                <td><span class="automation-tag">MEDIUM</span></td>
+            </tr>
+            <tr class="general">
+                <td>45</td>
+                <td class="clickable" onclick="toggleDetails('Other -  AWS Workspace')">Other -  AWS Workspace</td>
+                <td>General IT Support</td>
+                <td>18</td>
+                <td>0.4%</td>
+                <td>180.8</td>
+                <td>10.1</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="specialized">
+                <td>46</td>
+                <td class="clickable" onclick="toggleDetails('🎯 Salesforce Access')">🎯 Salesforce Access</td>
+                <td>Specialized Applications</td>
+                <td>17</td>
+                <td>0.4%</td>
+                <td>12.5</td>
+                <td>0.7</td>
+                <td><span class="automation-tag">MEDIUM</span></td>
+            </tr>
+            <tr class="specialized">
+                <td>47</td>
+                <td class="clickable" onclick="toggleDetails('Service Request - Applications')">Service Request - Applications</td>
+                <td>Specialized Applications</td>
+                <td>17</td>
+                <td>0.4%</td>
+                <td>18.9</td>
+                <td>1.1</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="general">
+                <td>48</td>
+                <td class="clickable" onclick="toggleDetails('Other - Security')">Other - Security</td>
+                <td>General IT Support</td>
+                <td>17</td>
+                <td>0.4%</td>
+                <td>25.7</td>
+                <td>1.5</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="hardware">
+                <td>49</td>
+                <td class="clickable" onclick="toggleDetails('Technical Issue - Hardware Setup')">Technical Issue - Hardware Setup</td>
+                <td>Hardware & Equipment</td>
+                <td>16</td>
+                <td>0.4%</td>
+                <td>20.2</td>
+                <td>1.3</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+            <tr class="hardware">
+                <td>50</td>
+                <td class="clickable" onclick="toggleDetails('Other - Hardware Setup')">Other - Hardware Setup</td>
+                <td>Hardware & Equipment</td>
+                <td>16</td>
+                <td>0.4%</td>
+                <td>27.1</td>
+                <td>1.7</td>
+                <td><span class="automation-tag">LOW</span></td>
+            </tr>
+        </table>
+        
+        <div class="metric">
+            <h3>🎯 Categories with Color Coding:</h3>
+            <ul>
+                <li><strong>Financial & Billing</strong> (Light Yellow) - Billing, invoices, financial management</li>
+                <li><strong>Monitoring & Alerts</strong> (Green) - System monitoring and alerting</li>
+                <li><strong>Security & Access</strong> (Purple) - Security tools and access management</li>
+                <li><strong>Email & Communication</strong> (Blue) - Email and communication tools</li>
+                <li><strong>Software & Licensing</strong> (Orange) - Software installation and licensing</li>
+                <li><strong>User Management</strong> (Light Green) - User accounts and permissions</li>
+                <li><strong>Infrastructure & Network</strong> (Light Red) - Network and infrastructure</li>
+                <li><strong>Hardware & Equipment</strong> (Light Orange) - Physical hardware</li>
+                <li><strong>Administrative Tasks</strong> (Light Blue) - Asset management, documentation</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
